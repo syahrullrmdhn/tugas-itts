@@ -6,15 +6,19 @@ include './auth/koneksi.php';
 if (isset($_GET['id'])) {
     $taskId = $_GET['id'];
 
-    // Query to retrieve task details based on the task ID
+    // Query to retrieve task details
     $query = "SELECT * FROM tasks WHERE id = $taskId";
     $result = $koneksi->query($query);
 
     // Check if the task exists
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
+        $namaDosen = $row['nama_dosen'];
+        $namaMatkul = $row['nama_matkul'];
+        $prodi = $row['prodi'];
+        $deadlineTugas = $row['deadline_tugas'];
         $tautanMateri = $row['tautan_materi'];
-        $filename = $row['nama_tugas'];
+        $detailTugas = $row['detail_tugas'];
     } else {
         // Redirect to index.php or show an error message
         header('Location: index.php?error=Task not found');
@@ -42,11 +46,23 @@ if (isset($_GET['id'])) {
     <?php include './layout/navbarAll.php'; ?>
 
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h2 class="my-4">Detail Tugas: <?php echo $filename; ?></h2>
+        <h2 class="my-4">Detail Tugas: <?php echo $namaMatkul; ?></h2>
+
+        <!-- Display the details of the task -->
+        <p><strong>Nama Dosen:</strong> <?php echo $namaDosen; ?></p>
+        <p><strong>Mata Kuliah:</strong> <?php echo $namaMatkul; ?></p>
+        <p><strong>Program Studi:</strong> <?php echo $prodi; ?></p>
+        <p><strong>Deadline Tugas:</strong> <?php echo $deadlineTugas; ?></p>
+        <p><strong>Detail Tugas:</strong></p>
+        <p><?php echo $detailTugas; ?></p>
 
         <!-- Display the embedded file -->
-        <iframe src="<?php echo $tautanMateri; ?>" style="width: 100%; height: 500px;"
-            sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
+        <?php if (!empty($tautanMateri)) : ?>
+            <iframe src="<?php echo $tautanMateri; ?>" style="width: 100%; height: 500px;"
+                sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
+        <?php else : ?>
+            <p>Belum ada materi untuk tugas ini.</p>
+        <?php endif; ?>
 
         <?php include './layout/footer.php'; ?>
 

@@ -1,7 +1,10 @@
-<?php include './layout/navbar.php'; 
+<?php
+include './layout/navbar.php';
+
 if (isset($_GET['error'])) {
     echo $_GET['error'];
-} ?>
+}
+?>
 
 <div class="container-xxl flex-grow-1 container-p-y">
     <!-- Tambah Tugas Button -->
@@ -25,9 +28,11 @@ if (isset($_GET['error'])) {
                             <th>ID</th>
                             <th>Nama Dosen</th>
                             <th>Nama Matkul</th>
-                            <th>Nama Tugas</th>
+                            <th>Prodi</th>
                             <th>Deadline Tugas</th>
-                            <th>Lihat Materi</th>
+                            <th>Materi</th>
+                            <th>Detail Tugas</th>
+                            <th>Timestamp</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -46,9 +51,19 @@ if (isset($_GET['error'])) {
                             echo "<td>{$row['id']}</td>";
                             echo "<td>{$row['nama_dosen']}</td>";
                             echo "<td>{$row['nama_matkul']}</td>";
-                            echo "<td>{$row['nama_tugas']}</td>";
-                            echo "<td>{$row['deadline']}</td>";
-                            echo "<td><a href='{$row['tautan_materi']}' target='_blank'>Lihat Materi</a></td>";
+                            echo "<td>{$row['prodi']}</td>";
+                            echo "<td>{$row['deadline_tugas']}</td>";
+
+                            // Check if 'materi' key exists in the row array
+                            $materiLink = isset($row['materi']) ? "<a href='./uploads/{$row['materi']}' target='_blank'>Lihat Materi</a>" : "Tidak Ada Materi";
+                            echo "<td>{$materiLink}</td>";
+
+                            echo "<td>{$row['detail_tugas']}</td>";
+
+                            // Check if 'timestamp' key exists in the row array
+                            $timestamp = isset($row['timestamp']) ? $row['timestamp'] : "Tidak Tersedia";
+                            echo "<td>{$timestamp}</td>";
+
                             echo "<td>";
                             echo "<a href='edit_tugas.php?id={$row['id']}' class='btn btn-primary'>Edit</a> ";
                             echo "<a href='delete_tugas.php?id={$row['id']}' class='btn btn-danger'>Hapus</a>";
@@ -73,7 +88,7 @@ if (isset($_GET['error'])) {
                 </div>
                 <div class="modal-body">
                     <!-- Formulir penambahan tugas -->
-                   <form action="./add_tugas.php" method="post" enctype="multipart/form-data">
+                    <form action="./add_tugas.php" method="post" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="nama_dosen" class="form-label">Nama Dosen</label>
                             <input type="text" class="form-control" id="nama_dosen" name="nama_dosen" required>
@@ -83,20 +98,24 @@ if (isset($_GET['error'])) {
                             <input type="text" class="form-control" id="nama_matkul" name="nama_matkul" required>
                         </div>
                         <div class="mb-3">
-                            <label for="nama_tugas" class="form-label">Nama Tugas</label>
-                            <input type="text" class="form-control" id="nama_tugas" name="nama_tugas" required>
+                            <label for="prodi" class="form-label">Prodi</label>
+                            <input type="text" class="form-control" id="prodi" name="prodi" required>
                         </div>
                         <div class="mb-3">
-                            <label for="deadline" class="form-label">Deadline</label>
-                            <input type="date" class="form-control" id="deadline" name="deadline" required>
+                            <label for="deadline_tugas" class="form-label">Deadline Tugas</label>
+                            <input type="date" class="form-control" id="deadline_tugas" name="deadline_tugas" required>
                         </div>
                         <div class="mb-3">
-        <label for="tautan_materi" class="form-label">Tautan Materi (File: PPT, Word, Excel, TXT)</label>
-        <input type="file" class="form-control" id="tautan_materi" name="tautan_materi" accept=".ppt, .pptx, .doc, .docx, .xls, .xlsx, .txt">
-    </div>
-    <button type="submit" class="btn btn-primary">Tambah Tugas</button>
-</form>
-                   
+                            <label for="info_materi" class="form-label">Info Materi (File: PPT, Word, Excel, TXT)</label>
+                            <input type="file" class="form-control" id="info_materi" name="info_materi" accept=".ppt, .pptx, .doc, .docx, .xls, .xlsx, .txt">
+                        </div>
+                        <div class="mb-3">
+                            <label for="detail_tugas" class="form-label">Detail Tugas</label>
+                            <textarea class="form-control" id="detail_tugas" name="detail_tugas" rows="5"></textarea>
+                            <small id="detail_tugas_help" class="form-text text-muted">Anda dapat menggunakan HTML untuk format teks (bold, link, dll.).</small>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Tambah Tugas</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -104,4 +123,4 @@ if (isset($_GET['error'])) {
     <!-- /Modal Tambah Tugas -->
 
     <!-- / Content -->
-<?php include './layout/footer.php'; ?>
+    <?php include './layout/footer.php'; ?>

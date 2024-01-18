@@ -20,10 +20,10 @@
                     $row = $result->fetch_assoc();
                     $namaDosen = $row['nama_dosen'];
                     $namaMatkul = $row['nama_matkul'];
-                    $namaTugas = $row['nama_tugas'];
-                    $deadline = $row['deadline'];
+                    $prodi = $row['prodi'];
+                    $deadlineTugas = $row['deadline_tugas'];
                     $tautanMateri = $row['tautan_materi'];
-                    // ... (sisa kolom data)
+                    $detailTugas = $row['detail_tugas'];
 
                     // Tampilkan formulir edit
                     ?>
@@ -36,7 +36,7 @@
                         <!-- Tambahkan input untuk field-file baru -->
                         <div class="mb-3">
                             <label for="file_baru" class="form-label">File Baru</label>
-                            <input type="file" class="form-control" id="file_baru" name="file_baru[]" multiple>
+                            <input type="file" class="form-control" id="file_baru" name="file_baru[]" multiple accept=".pdf, .docx, .pptx">
                         </div>
                         <!-- Tampilkan file-file yang sudah ada -->
                         <div class="mb-3">
@@ -57,15 +57,18 @@
                             <input type="text" class="form-control" id="nama_matkul" name="nama_matkul" value="<?php echo $namaMatkul; ?>" required>
                         </div>
                         <div class="mb-3">
-                            <label for="deadline" class="form-label">Deadline</label>
-                            <input type="datetime-local" class="form-control" id="deadline" name="deadline" value="<?php echo date('Y-m-d\TH:i', strtotime($deadline)); ?>" required>
+                            <label for="prodi" class="form-label">Prodi</label>
+                            <input type="text" class="form-control" id="prodi" name="prodi" value="<?php echo $prodi; ?>" required>
                         </div>
                         <div class="mb-3">
-                            <label for="nama_tugas" class="form-label">Nama Tugas</label>
-                            <input type="text" class="form-control" id="nama_tugas" name="nama_tugas" value="<?php echo $namaTugas; ?>" required>
+                            <label for="deadline_tugas" class="form-label">Deadline Tugas</label>
+                            <input type="date" class="form-control" id="deadline_tugas" name="deadline_tugas" value="<?php echo $deadlineTugas; ?>" required>
                         </div>
-                        <!-- Tambahkan sisa kolom formulir lainnya sesuai kebutuhan -->
-                        <!-- ... -->
+                        <div class="mb-3">
+                            <label for="detail_tugas" class="form-label">Detail Tugas</label>
+                            <textarea class="form-control" id="detail_tugas" name="detail_tugas" rows="5"><?php echo $detailTugas; ?></textarea>
+                            <small id="detail_tugas_help" class="form-text text-muted">Anda dapat menggunakan HTML untuk format teks (bold, link, dll.).</small>
+                        </div>
                         <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                     </form>
                     <?php
