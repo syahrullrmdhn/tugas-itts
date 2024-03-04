@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 23 Nov 2023 pada 14.32
--- Versi server: 10.6.15-MariaDB-cll-lve
--- Versi PHP: 8.1.16
+-- Waktu pembuatan: 04 Mar 2024 pada 14.55
+-- Versi server: 10.6.16-MariaDB-cll-lve
+-- Versi PHP: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -39,6 +39,43 @@ CREATE TABLE `informasi` (
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `jadwal`
+--
+
+CREATE TABLE `jadwal` (
+  `id` int(5) NOT NULL,
+  `kode_matkul` varchar(6) NOT NULL,
+  `nama_dosen` varchar(255) NOT NULL,
+  `waktu_kelas` date NOT NULL,
+  `mata_kuliah` varchar(80) NOT NULL,
+  `prodi` varchar(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data untuk tabel `jadwal`
+--
+
+INSERT INTO `jadwal` (`id`, `kode_matkul`, `nama_dosen`, `waktu_kelas`, `mata_kuliah`, `prodi`) VALUES
+(1, 'TI108', 'Suci Amalia, S.Pd, M.Hum.\r\n', '2024-03-04', 'Pendidikan Pancasila & Kewarganegaraan (T) - 3 sks\r\n', 'SI,TI,IF');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `mahasiswa`
+--
+
+CREATE TABLE `mahasiswa` (
+  `id` int(11) NOT NULL,
+  `nama_mahasiswa` varchar(255) NOT NULL,
+  `nim` varchar(20) NOT NULL,
+  `prodi` varchar(50) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `nomor_whatsapp` varchar(16) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `tasks`
 --
 
@@ -49,16 +86,11 @@ CREATE TABLE `tasks` (
   `nama_dosen` varchar(255) DEFAULT NULL,
   `nama_matkul` varchar(255) DEFAULT NULL,
   `lihat_materi` varchar(255) DEFAULT NULL,
-  `tautan_materi` varchar(255) DEFAULT NULL
+  `tautan_materi` varchar(255) DEFAULT NULL,
+  `detail_tugas` text DEFAULT NULL,
+  `prodi` varchar(255) DEFAULT NULL,
+  `deadline_tugas` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data untuk tabel `tasks`
---
-
-INSERT INTO `tasks` (`id`, `nama_tugas`, `deadline`, `nama_dosen`, `nama_matkul`, `lihat_materi`, `tautan_materi`) VALUES
-(6, 'UJIAN TENGAH SEMESTER', '2023-11-23', 'Anas Nasrulloh, S.Kom., M.Kom', 'Pemrograman Berbasis Event', NULL, './assets/outputmateri/UTS PBE.doc'),
-(8, 'Kisi Kisi UTS', '2023-11-22', 'Muhammad Aziz Fakhrozi, S.Kom., M.MSI.', 'PENGANTAR TEKNOLOGI INFORMASI & KOMUNIKASI', NULL, './assets/outputmateri/Kisi-Kisi UTS PTIK.docx');
 
 -- --------------------------------------------------------
 
@@ -78,8 +110,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`) VALUES
-(1, 'syahrul', 'syahrul123', 'user1@example.com'),
-(3, 'omdidi', 'omdidi2023', 'didi@example.com');
+(1, 'syahrul', 'syahrul123', 'user1@example.com');
 
 --
 -- Indexes for dumped tables
@@ -89,6 +120,18 @@ INSERT INTO `users` (`id`, `username`, `password`, `email`) VALUES
 -- Indeks untuk tabel `informasi`
 --
 ALTER TABLE `informasi`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `jadwal`
+--
+ALTER TABLE `jadwal`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `mahasiswa`
+--
+ALTER TABLE `mahasiswa`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -114,10 +157,22 @@ ALTER TABLE `informasi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT untuk tabel `jadwal`
+--
+ALTER TABLE `jadwal`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `mahasiswa`
+--
+ALTER TABLE `mahasiswa`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT untuk tabel `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`

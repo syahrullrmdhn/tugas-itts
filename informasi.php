@@ -1,31 +1,35 @@
 <?php include './layout/navbarAll.php'; ?>
 
 <div class="container-xxl flex-grow-1 container-p-y">
-<div class="col-sm-6 col-lg-4 mb-4">
-                  <div class="card text-center">
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">This card has a regular title and short paragraph of text below it.</p>
-                      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 mb-4">
-                  <div class="card">
-                    <img class="card-img-top" src="./template/assets/img/elements/4.jpg" alt="Card image cap" />
-                  </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 mb-4">
-                  <div class="card p-3 text-end">
-                    <figure class="mb-0">
-                      <blockquote class="blockquote">
-                        <p>A well-known quote, contained in a blockquote element.</p>
-                      </blockquote>
-                      <figcaption class="blockquote-footer mb-0 text-muted">
-                        Someone famous in <cite title="Source Title">Source Title</cite>
-                      </figcaption>
-                    </figure>
-                  </div>
-                </div>
-                
-<?php include './layout/footer.php';?>
+    <div class="col-md-6 offset-md-3 mb-4">
+        <form action="./backend/simpan_data_mahasiswa.php" method="post">
+            <div class="mb-3">
+                <label for="nama_mahasiswa" class="form-label">Nama Mahasiswa</label>
+                <input type="text" class="form-control" id="nama_mahasiswa" name="nama_mahasiswa" required>
+            </div>
+            <div class="mb-3">
+                <label for="nim" class="form-label">NIM</label>
+                <input type="number" class="form-control" id="nim" name="nim" required>
+            </div>
+            <div class="mb-3">
+                <label for="prodi" class="form-label">Prodi</label>
+                <select class="form-select" id="prodi" name="prodi" required>
+                    <option value="Informatika">Informatika</option>
+                    <option value="Teknologi Informasi">Teknologi Informasi</option>
+                    <option value="Sistem Informasi">Sistem Informasi</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="nomor_whatsapp" class="form-label">Nomor Whatsapp</label>
+                <input type="number" class="form-control" id="nomor_whatsapp" name="nomor_whatsapp" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+<?php include './layout/footer.php'; ?>

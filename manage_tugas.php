@@ -55,14 +55,25 @@ if (isset($_GET['error'])) {
                             echo "<td>{$row['deadline_tugas']}</td>";
 
                             // Check if 'materi' key exists in the row array
-                            $materiLink = isset($row['materi']) ? "<a href='./uploads/{$row['materi']}' target='_blank'>Lihat Materi</a>" : "Tidak Ada Materi";
+                            $materiLink = isset($row['tautan_materi']) ? "<a href='{$row['tautan_materi']}' target='_blank'>View</a>" : "Tidak Ada Materi";
                             echo "<td>{$materiLink}</td>";
 
                             echo "<td>{$row['detail_tugas']}</td>";
+                                                        echo "<td>";
 
-                            // Check if 'timestamp' key exists in the row array
-                            $timestamp = isset($row['timestamp']) ? $row['timestamp'] : "Tidak Tersedia";
-                            echo "<td>{$timestamp}</td>";
+                            // Tambahkan hitung mundur dari deadline tugas
+                            $deadlineTimestamp = strtotime($row['deadline_tugas']);
+                            $currentTime = time();
+
+                            if ($currentTime < $deadlineTimestamp) {
+                                $timeDiff = $deadlineTimestamp - $currentTime;
+                                $days = floor($timeDiff / (60 * 60 * 24));
+                                $hours = floor(($timeDiff % (60 * 60 * 24)) / (60 * 60));
+                                $minutes = floor(($timeDiff % (60 * 60)) / 60);
+                                echo "{$days} hari, {$hours} jam, {$minutes} menit";
+                            } else {
+                                echo "Telah berakhir";
+                            }
 
                             echo "<td>";
                             echo "<a href='edit_tugas.php?id={$row['id']}' class='btn btn-primary'>Edit</a> ";
@@ -106,7 +117,7 @@ if (isset($_GET['error'])) {
                             <input type="date" class="form-control" id="deadline_tugas" name="deadline_tugas" required>
                         </div>
                         <div class="mb-3">
-                            <label for="info_materi" class="form-label">Info Materi (File: PPT, Word, Excel, TXT)</label>
+                            <label for="info_materi" class="form-label">Info Materi</label>
                             <input type="file" class="form-control" id="info_materi" name="info_materi" accept=".ppt, .pptx, .doc, .docx, .xls, .xlsx, .txt">
                         </div>
                         <div class="mb-3">
